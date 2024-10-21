@@ -4,16 +4,16 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="DobleFoco - Generador de Presupuestos">
   <main>
     <section id="company-info">
-      <div class="header">
-        <img src="https://rweb.cl/assets/dbf-160-93729187.png" alt="DobleFoco Logo" width="80" height="80">
-        <div class="header-text">
-          <input type="text" id="brand-name" value="Agencia DobleFoco">
-          <input type="text" id="document-title" value="Presupuesto">
-        </div>
-      </div>
-      <div class="company-form">
+		<div class="header">
+			<img src="https://rweb.cl/assets/dbf-160-93729187.png" alt="DobleFoco Logo" width="80" height="80">
+			<div class="header-text">
+			  <input type="text" id="brand-name" value="Agencia DobleFoco">
+			  <input type="text" id="document-title" value="Presupuesto">
+			</div>
+		  </div>
+		  <div class="company-form">
         <div class="form-group">
-          <label for="companyName">Nombre de la Empresa</label>
+          <label for="companyName">Nombre de la Empresa Receptora</label>
           <input type="text" id="companyName" name="companyName" required>
         </div>
         <div class="form-group">
@@ -78,9 +78,8 @@ import Layout from '../layouts/Layout.astro';
       <div class="header">
         <img src="https://rweb.cl/assets/dbf-160-93729187.png" alt="DobleFoco Logo" width="80" height="80">
         <div class="header-text">
-          <!-- Muestra el nombre de la marca y el título en la versión imprimible -->
-          <h1 id="print-brand-name">Agencia DobleFoco</h1>
-          <h2 id="print-document-title">Presupuesto</h2>
+          <h1 id="display-brand-name">DobleFoco</h1>
+          <h2 id="display-document-title">Presupuesto</h2>
         </div>
       </div>
       <div id="display-company-info"></div>
@@ -100,14 +99,14 @@ import Layout from '../layouts/Layout.astro';
         </thead>
         <tbody></tbody>
         <tfoot>
-          <tr>
-            <td colspan="4"></td>
-            <td>Total Neto:</td>
-            <td id="total-neto"></td>
-            <td id="total-iva"></td>
-            <td id="total-total" class="total-iva"></td>
-          </tr>
-        </tfoot>
+			<tr>
+			  <td colspan="4"></td>
+			  <td>Total Neto:</td>
+			  <td id="total-neto"></td>
+			  <td id="total-iva"></td>
+			  <td id="total-total" class="total-iva"></td>
+			</tr>
+		  </tfoot>
       </table>
       <div id="display-closing-message"></div>
       <div id="contact-info">
@@ -120,24 +119,22 @@ import Layout from '../layouts/Layout.astro';
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const brandNameInput = document.getElementById('brand-name');
-    const documentTitleInput = document.getElementById('document-title');
-    
-    // IDs de la versión imprimible
-    const printBrandName = document.getElementById('print-brand-name');
-    const printDocumentTitle = document.getElementById('print-document-title');
-
-    const companyNameInput = document.getElementById('companyName');
-    const contactPersonInput = document.getElementById('contactPerson');
-    const companyAddressInput = document.getElementById('companyAddress');
-    const companyEmailInput = document.getElementById('companyEmail');
-    const companyPhoneInput = document.getElementById('companyPhone');
-    const greetingInput = document.getElementById('greeting');
-    const presetMessageButton = document.getElementById('preset-message');
-    const displayCompanyInfo = document.getElementById('display-company-info');
-    const displayGreeting = document.getElementById('display-greeting');
-    const closingMessageInput = document.getElementById('closingMessage');
-    const displayClosingMessage = document.getElementById('display-closing-message');
+	
+	const companyNameInput = document.getElementById('companyName');
+	const contactPersonInput = document.getElementById('contactPerson');
+	const companyAddressInput = document.getElementById('companyAddress');
+	const companyEmailInput = document.getElementById('companyEmail');
+	const companyPhoneInput = document.getElementById('companyPhone');
+	const greetingInput = document.getElementById('greeting');
+	const presetMessageButton = document.getElementById('preset-message');
+	const displayCompanyInfo = document.getElementById('display-company-info');
+	const displayGreeting = document.getElementById('display-greeting');
+	const closingMessageInput = document.getElementById('closingMessage');
+	const displayClosingMessage = document.getElementById('display-closing-message');
+	const brandNameInput = document.getElementById('brand-name');
+	const documentTitleInput = document.getElementById('document-title');
+	const displayBrandName = document.getElementById('display-brand-name')
+  	const displayDocumentTitle = document.getElementById('display-document-title');
 
     const itemForm = document.getElementById('item-form');
     const quoteTableBody = document.querySelector('#quote-table tbody');
@@ -149,27 +146,40 @@ import Layout from '../layouts/Layout.astro';
 
     let items = [];
 
-    // Cargar el nombre de la marca y título desde localStorage o usar los valores predeterminados
-    brandNameInput.value = localStorage.getItem('brandName') || 'Agencia DobleFoco';
-    documentTitleInput.value = localStorage.getItem('documentTitle') || 'Presupuesto';
+    const companyInfo = JSON.parse(localStorage.getItem('companyInfo')) || {};
+    companyNameInput.value = companyInfo.companyName || '';
+    contactPersonInput.value = companyInfo.contactPerson || '';
+    companyAddressInput.value = companyInfo.companyAddress || '';
+    companyEmailInput.value = companyInfo.companyEmail || '';
+    companyPhoneInput.value = companyInfo.companyPhone || '';
+    greetingInput.value = localStorage.getItem('greeting') || '';
+    closingMessageInput.value = localStorage.getItem('closingMessage') || '';
+	brandNameInput.value = localStorage.getItem('brandName') || 'Agencia DobleFoco';
+  	documentTitleInput.value = localStorage.getItem('documentTitle') || 'Presupuesto';
 
-    // Actualizar el nombre de la marca y el título en la versión imprimible
-    printBrandName.textContent = brandNameInput.value;
-    printDocumentTitle.textContent = documentTitleInput.value;
+    function updateCompanyInfoDisplay() {
+      displayCompanyInfo.innerHTML = `
+        <p><strong>Empresa:</strong> ${companyNameInput.value}</p>
+        <p><strong>Contacto:</strong> ${contactPersonInput.value}</p>
+        <p><strong>Dirección:</strong> ${companyAddressInput.value}</p>
+        <p><strong>Email:</strong> ${companyEmailInput.value}</p>
+        <p><strong>Teléfono:</strong> ${companyPhoneInput.value}</p>
+      `;
+    }
 
-    // Actualizar el nombre de la marca en la versión visible e imprimible, y guardarlo en localStorage
-    brandNameInput.addEventListener('input', () => {
-      localStorage.setItem('brandName', brandNameInput.value);
-      printBrandName.textContent = brandNameInput.value; // Refleja el cambio en la versión imprimible
-    });
+    function updateGreetingDisplay() {
+      displayGreeting.innerHTML = `<p>${greetingInput.value}</p>`;
+    }
 
-    // Actualizar el título del documento en la versión visible e imprimible, y guardarlo en localStorage
-    documentTitleInput.addEventListener('input', () => {
-      localStorage.setItem('documentTitle', documentTitleInput.value);
-      printDocumentTitle.textContent = documentTitleInput.value; // Refleja el cambio en la versión imprimible
-    });
+    function updateClosingMessageDisplay() {
+      displayClosingMessage.innerHTML = `<p>${closingMessageInput.value}</p>`;
+    }
 
-    // Guardar datos de la empresa receptora en localStorage
+    function updateDocumentTitleDisplay() {
+	  displayBrandName.textContent = brandNameInput.value;
+      displayDocumentTitle.textContent = documentTitleInput.value;
+    }
+
     [companyNameInput, contactPersonInput, companyAddressInput, companyEmailInput, companyPhoneInput].forEach(input => {
       input.addEventListener('input', () => {
         const companyInfo = {
@@ -184,7 +194,6 @@ import Layout from '../layouts/Layout.astro';
       });
     });
 
-    // Guardar saludo personalizado en localStorage
     greetingInput.addEventListener('input', () => {
       localStorage.setItem('greeting', greetingInput.value);
       updateGreetingDisplay();
@@ -201,35 +210,73 @@ import Layout from '../layouts/Layout.astro';
       updateClosingMessageDisplay();
     });
 
-    function updateTable() {
-      quoteTableBody.innerHTML = '';
-      let sumNeto = 0;
-      let sumIva = 0;
-      let sumTotal = 0;
+	brandNameInput.addEventListener('input', () => {
+		localStorage.setItem('brandName', brandNameInput.value);
+	});
 
-      items.forEach((itemObj, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td><button data-index="${index}" class="remove-item">−</button></td>
-          <td>${itemObj.item}</td>
-          <td>${itemObj.quantity}</td>
-          <td>${itemObj.unit}</td>
-          <td>$${itemObj.unitValue.toLocaleString('de-DE')}</td>
-          <td>$${itemObj.neto.toLocaleString('de-DE')}</td>
-          <td>$${itemObj.iva.toLocaleString('de-DE')}</td>
-          <td>$${itemObj.total.toLocaleString('de-DE')}</td>
-        `;
-        quoteTableBody.appendChild(row);
+    documentTitleInput.addEventListener('input', () => {
+      localStorage.setItem('documentTitle', documentTitleInput.value);
+      updateDocumentTitleDisplay();
+    });
 
-        sumNeto += itemObj.neto;
-        sumIva += itemObj.iva;
-        sumTotal += itemObj.total;
-      });
+	documentTitleInput.addEventListener('input', () => {
+		localStorage.setItem('documentTitle', documentTitleInput.value);
+		displayDocumentTitle.textContent = documentTitleInput.value;
+	});
 
-      totalNeto.textContent = `$${sumNeto.toLocaleString('de-DE')}`;
-      totalIva.textContent = `$${sumIva.toLocaleString('de-DE')}`;
-      totalTotal.textContent = `$${sumTotal.toLocaleString('de-DE')}`;
+	displayDocumentTitle.textContent = documentTitleInput.value;
+
+    if (localStorage.getItem('items')) {
+      items = JSON.parse(localStorage.getItem('items'));
+      updateTable();
     }
+
+    itemForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const item = document.getElementById('item').value;
+      const quantity = parseFloat(document.getElementById('quantity').value);
+      const unit = document.getElementById('unit').value;
+      const unitValue = parseFloat(document.getElementById('unitValue').value);
+      const neto = quantity * unitValue;
+      const iva = neto * 0.19;
+      const total = neto + iva;
+
+      items.push({ item, quantity, unit, unitValue, neto, iva, total });
+      localStorage.setItem('items', JSON.stringify(items));
+      updateTable();
+      itemForm.reset();
+    });
+
+    function updateTable() {
+		quoteTableBody.innerHTML = '';
+		let sumNeto = 0;
+		let sumIva = 0;
+		let sumTotal = 0;
+
+		items.forEach((itemObj, index) => {
+			const row = document.createElement('tr');
+			row.innerHTML = `
+			<td><button data-index="${index}" class="remove-item">−</button></td>
+			<td>${itemObj.item}</td>
+			<td>${itemObj.quantity}</td>
+			<td>${itemObj.unit}</td>
+			<td>$${itemObj.unitValue.toLocaleString('es-CL')}</td>
+			<td>$${itemObj.neto.toLocaleString('es-CL')}</td>
+			<td>$${itemObj.iva.toLocaleString('es-CL')}</td>
+			<td>$${itemObj.total.toLocaleString('es-CL')}</td>
+			`;
+			quoteTableBody.appendChild(row);
+
+			sumNeto += itemObj.neto;
+			sumIva += itemObj.iva;
+			sumTotal += itemObj.total;
+		});
+
+		totalNeto.textContent = `$${sumNeto.toLocaleString('es-CL')}`;
+		totalIva.textContent = `$${sumIva.toLocaleString('es-CL')}`;
+		totalTotal.textContent = `$${sumTotal.toLocaleString('es-CL')}`;
+		}
+
 
     quoteTableBody.addEventListener('click', (e) => {
       if (e.target.classList.contains('remove-item')) {
@@ -244,13 +291,26 @@ import Layout from '../layouts/Layout.astro';
       if (confirm('¿Estás seguro de que deseas limpiar todos los datos?')) {
         items = [];
         localStorage.removeItem('items');
+        localStorage.removeItem('companyInfo');
+        localStorage.removeItem('greeting');
+        localStorage.removeItem('closingMessage');
+        localStorage.removeItem('documentTitle');
         updateTable();
+        updateCompanyInfoDisplay();
+        updateGreetingDisplay();
+        updateClosingMessageDisplay();
+        updateDocumentTitleDisplay();
       }
     });
 
     printButton.addEventListener('click', () => {
       window.print();
     });
+
+    updateCompanyInfoDisplay();
+    updateGreetingDisplay();
+    updateClosingMessageDisplay();
+    updateDocumentTitleDisplay();
   });
 </script>
 
@@ -295,6 +355,28 @@ import Layout from '../layouts/Layout.astro';
     border-bottom: 1px solid #000;
     width: 100%;
   }
+
+  .header-text input {
+	font-size: 1.5em;
+	margin-top: 5px;
+	border: none;
+	border-bottom: 1px solid #000;
+	width: 100%;
+	font-weight: bold;
+	}
+
+	#brand-name {
+	font-size: 1.8em;
+	font-weight: bold;
+	border: none;
+	border-bottom: 1px solid #000;
+	width: 100%;
+	}
+
+	#brand-name:focus, #document-title:focus {
+	outline: none; /* Eliminar el borde azul predeterminado al enfocar */
+	}
+
 
   .company-form {
     display: flex;
@@ -395,13 +477,23 @@ import Layout from '../layouts/Layout.astro';
     width: 30px;
   }
 
-  #quote-table tfoot td {
-    font-weight: normal;
-  }
-
   #quote-table tfoot td.total-iva {
-    font-weight: bold;
-  }
+    font-weight: bold; /* Mantén la negrita solo en la celda del total final con IVA */
+}
+
+#quote-table tfoot tr td:nth-child(5),
+#quote-table tfoot tr td:nth-child(6),
+#quote-table tfoot tr td:nth-child(7),
+#quote-table tfoot tr td:nth-child(8) {
+    text-align: right;
+}
+
+#quote-table tfoot tr td:nth-child(5)::before,
+#quote-table tfoot tr td:nth-child(6)::before,
+#quote-table tfoot tr td:nth-child(7)::before,
+/* #quote-table tfoot tr td:nth-child(8)::before {
+    content: "$";
+} */
 
   #item-form button,
   #print-button,
@@ -477,11 +569,11 @@ import Layout from '../layouts/Layout.astro';
       margin: 15mm; /* Agrega márgenes para evitar cortes en los bordes */
     }
 
-    #brand-name,
-    #document-title {
+    #brand-name {
       visibility: visible;
       font-size: 1.8em;
       font-weight: bold;
     }
 }
+
 </style>
