@@ -1,123 +1,515 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
 ---
+<Layout title="DobleFoco - Generador de Presupuestos">
+  <main>
+    <section id="company-info">
+      <div class="header">
+        <img src="https://rweb.cl/assets/dbf-160-93729187.png" alt="DobleFoco Logo" width="80" height="80">
+        <div class="header-text">
+          <h1>DobleFoco</h1>
+          <input type="text" id="document-title" value="Presupuesto">
+        </div>
+      </div>
+      <div class="company-form">
+        <div class="form-group">
+          <label for="companyName">Nombre de la Empresa Receptora</label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <div class="form-group">
+          <label for="contactPerson">Persona de Contacto</label>
+          <input type="text" id="contactPerson" name="contactPerson" required>
+        </div>
+        <div class="form-group">
+          <label for="companyAddress">Dirección</label>
+          <input type="text" id="companyAddress" name="companyAddress" required>
+        </div>
+        <div class="form-group">
+          <label for="companyEmail">Correo Electrónico</label>
+          <input type="email" id="companyEmail" name="companyEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="companyPhone">Teléfono</label>
+          <input type="tel" id="companyPhone" name="companyPhone" required>
+        </div>
+      </div>
+    </section>
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<svg
-			class="astro-a"
-			width="495"
-			height="623"
-			viewBox="0 0 495 623"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			aria-hidden="true"
-		>
-			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
-				d="M167.19 364.254C83.4786 364.254 0 404.819 0 404.819C0 404.819 141.781 19.4876 142.087 18.7291C146.434 7.33701 153.027 0 162.289 0H332.441C341.703 0 348.574 7.33701 352.643 18.7291C352.92 19.5022 494.716 404.819 494.716 404.819C494.716 404.819 426.67 364.254 327.525 364.254L264.41 169.408C262.047 159.985 255.147 153.581 247.358 153.581C239.569 153.581 232.669 159.985 230.306 169.408L167.19 364.254ZM160.869 530.172C160.877 530.18 160.885 530.187 160.894 530.195L160.867 530.181C160.868 530.178 160.868 530.175 160.869 530.172ZM136.218 411.348C124.476 450.467 132.698 504.458 160.869 530.172C160.997 529.696 161.125 529.242 161.248 528.804C161.502 527.907 161.737 527.073 161.917 526.233C165.446 509.895 178.754 499.52 195.577 500.01C211.969 500.487 220.67 508.765 223.202 527.254C224.141 534.12 224.23 541.131 224.319 548.105C224.328 548.834 224.337 549.563 224.347 550.291C224.563 566.098 228.657 580.707 237.264 593.914C245.413 606.426 256.108 615.943 270.749 622.478C270.593 621.952 270.463 621.508 270.35 621.126C270.045 620.086 269.872 619.499 269.685 618.911C258.909 585.935 266.668 563.266 295.344 543.933C298.254 541.971 301.187 540.041 304.12 538.112C310.591 533.854 317.059 529.599 323.279 525.007C345.88 508.329 360.09 486.327 363.431 457.844C364.805 446.148 363.781 434.657 359.848 423.275C358.176 424.287 356.587 425.295 355.042 426.275C351.744 428.366 348.647 430.33 345.382 431.934C303.466 452.507 259.152 455.053 214.03 448.245C184.802 443.834 156.584 436.019 136.218 411.348Z"
-				fill="url(#paint0_linear_1805_24383)"></path>
-			<defs>
-				<linearGradient
-					id="paint0_linear_1805_24383"
-					x1="247.358"
-					y1="0"
-					x2="247.358"
-					y2="622.479"
-					gradientUnits="userSpaceOnUse"
-				>
-					<stop stop-opacity="0.9"></stop>
-					<stop offset="1" stop-opacity="0.2"></stop>
-				</linearGradient>
-			</defs>
-		</svg>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+    <section id="custom-greeting">
+      <div class="form-group">
+        <label for="greeting">Saludo Personalizado</label>
+        <textarea id="greeting" name="greeting" rows="3"></textarea>
+        <button id="preset-message">Mensaje Predefinido</button>
+      </div>
+    </section>
+
+    <section id="editor">
+      <h2>Agregar Items al Presupuesto</h2>
+      <form id="item-form">
+        <div class="form-group">
+          <label for="item">ITEM</label>
+          <input type="text" id="item" name="item" required>
+        </div>
+        <div class="form-group">
+          <label for="quantity">Cantidad</label>
+          <input type="number" id="quantity" name="quantity" required>
+        </div>
+        <div class="form-group">
+          <label for="unit">Unidad</label>
+          <input type="text" id="unit" name="unit" required>
+        </div>
+        <div class="form-group">
+          <label for="unitValue">Valor Unitario</label>
+          <input type="number" id="unitValue" name="unitValue" required>
+        </div>
+        <button type="submit">Agregar Item</button>
+      </form>
+      <button id="clear-data">Limpiar Todos los Datos</button>
+    </section>
+
+    <section id="closing-message">
+      <div class="form-group">
+        <label for="closingMessage">Mensaje de Despedida</label>
+        <textarea id="closingMessage" name="closingMessage" rows="2"></textarea>
+      </div>
+    </section>
+
+    <section id="printable-area">
+      <div class="header">
+        <img src="https://rweb.cl/assets/dbf-160-93729187.png" alt="DobleFoco Logo" width="80" height="80">
+        <div class="header-text">
+          <h1>DobleFoco</h1>
+          <h2 id="display-document-title">Presupuesto</h2>
+        </div>
+      </div>
+      <div id="display-company-info"></div>
+      <div id="display-greeting"></div>
+      <table id="quote-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>ITEM</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+            <th>Valor Unitario</th>
+            <th>Neto</th>
+            <th>IVA 19%</th>
+            <th>TOTAL</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+			<tr>
+			  <td colspan="4"></td>
+			  <td>Total Neto:</td>
+			  <td id="total-neto"></td>
+			  <td id="total-iva"></td>
+			  <td id="total-total" class="total-iva"></td>
+			</tr>
+		  </tfoot>
+      </table>
+      <div id="display-closing-message"></div>
+      <div id="contact-info">
+        www.doblefoco.cl - agencia@doblefoco.cl
+      </div>
+      <button id="print-button">Imprimir Presupuesto</button>
+    </section>
+  </main>
 </Layout>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const companyNameInput = document.getElementById('companyName');
+    const contactPersonInput = document.getElementById('contactPerson');
+    const companyAddressInput = document.getElementById('companyAddress');
+    const companyEmailInput = document.getElementById('companyEmail');
+    const companyPhoneInput = document.getElementById('companyPhone');
+    const greetingInput = document.getElementById('greeting');
+    const presetMessageButton = document.getElementById('preset-message');
+    const displayCompanyInfo = document.getElementById('display-company-info');
+    const displayGreeting = document.getElementById('display-greeting');
+    const closingMessageInput = document.getElementById('closingMessage');
+    const displayClosingMessage = document.getElementById('display-closing-message');
+    const documentTitleInput = document.getElementById('document-title');
+    const displayDocumentTitle = document.getElementById('display-document-title');
+
+    const itemForm = document.getElementById('item-form');
+    const quoteTableBody = document.querySelector('#quote-table tbody');
+    const totalNeto = document.getElementById('total-neto');
+    const totalIva = document.getElementById('total-iva');
+    const totalTotal = document.getElementById('total-total');
+    const clearDataButton = document.getElementById('clear-data');
+    const printButton = document.getElementById('print-button');
+
+    let items = [];
+
+    const companyInfo = JSON.parse(localStorage.getItem('companyInfo')) || {};
+    companyNameInput.value = companyInfo.companyName || '';
+    contactPersonInput.value = companyInfo.contactPerson || '';
+    companyAddressInput.value = companyInfo.companyAddress || '';
+    companyEmailInput.value = companyInfo.companyEmail || '';
+    companyPhoneInput.value = companyInfo.companyPhone || '';
+    greetingInput.value = localStorage.getItem('greeting') || '';
+    closingMessageInput.value = localStorage.getItem('closingMessage') || '';
+    documentTitleInput.value = localStorage.getItem('documentTitle') || 'Presupuesto';
+
+    function updateCompanyInfoDisplay() {
+      displayCompanyInfo.innerHTML = `
+        <p><strong>Empresa:</strong> ${companyNameInput.value}</p>
+        <p><strong>Contacto:</strong> ${contactPersonInput.value}</p>
+        <p><strong>Dirección:</strong> ${companyAddressInput.value}</p>
+        <p><strong>Email:</strong> ${companyEmailInput.value}</p>
+        <p><strong>Teléfono:</strong> ${companyPhoneInput.value}</p>
+      `;
+    }
+
+    function updateGreetingDisplay() {
+      displayGreeting.innerHTML = `<p>${greetingInput.value}</p>`;
+    }
+
+    function updateClosingMessageDisplay() {
+      displayClosingMessage.innerHTML = `<p>${closingMessageInput.value}</p>`;
+    }
+
+    function updateDocumentTitleDisplay() {
+      displayDocumentTitle.textContent = documentTitleInput.value;
+    }
+
+    [companyNameInput, contactPersonInput, companyAddressInput, companyEmailInput, companyPhoneInput].forEach(input => {
+      input.addEventListener('input', () => {
+        const companyInfo = {
+          companyName: companyNameInput.value,
+          contactPerson: contactPersonInput.value,
+          companyAddress: companyAddressInput.value,
+          companyEmail: companyEmailInput.value,
+          companyPhone: companyPhoneInput.value,
+        };
+        localStorage.setItem('companyInfo', JSON.stringify(companyInfo));
+        updateCompanyInfoDisplay();
+      });
+    });
+
+    greetingInput.addEventListener('input', () => {
+      localStorage.setItem('greeting', greetingInput.value);
+      updateGreetingDisplay();
+    });
+
+    presetMessageButton.addEventListener('click', () => {
+      greetingInput.value = 'Adjunto el presupuesto solicitado. Quedamos atentos a sus comentarios.';
+      localStorage.setItem('greeting', greetingInput.value);
+      updateGreetingDisplay();
+    });
+
+    closingMessageInput.addEventListener('input', () => {
+      localStorage.setItem('closingMessage', closingMessageInput.value);
+      updateClosingMessageDisplay();
+    });
+
+    documentTitleInput.addEventListener('input', () => {
+      localStorage.setItem('documentTitle', documentTitleInput.value);
+      updateDocumentTitleDisplay();
+    });
+
+    if (localStorage.getItem('items')) {
+      items = JSON.parse(localStorage.getItem('items'));
+      updateTable();
+    }
+
+    itemForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const item = document.getElementById('item').value;
+      const quantity = parseFloat(document.getElementById('quantity').value);
+      const unit = document.getElementById('unit').value;
+      const unitValue = parseFloat(document.getElementById('unitValue').value);
+      const neto = quantity * unitValue;
+      const iva = neto * 0.19;
+      const total = neto + iva;
+
+      items.push({ item, quantity, unit, unitValue, neto, iva, total });
+      localStorage.setItem('items', JSON.stringify(items));
+      updateTable();
+      itemForm.reset();
+    });
+
+    function updateTable() {
+		quoteTableBody.innerHTML = '';
+		let sumNeto = 0;
+		let sumIva = 0;
+		let sumTotal = 0;
+
+		items.forEach((itemObj, index) => {
+			const row = document.createElement('tr');
+			row.innerHTML = `
+			<td><button data-index="${index}" class="remove-item">−</button></td>
+			<td>${itemObj.item}</td>
+			<td>${itemObj.quantity}</td>
+			<td>${itemObj.unit}</td>
+			<td>$${itemObj.unitValue.toLocaleString('es-CL')}</td>
+			<td>$${itemObj.neto.toLocaleString('es-CL')}</td>
+			<td>$${itemObj.iva.toLocaleString('es-CL')}</td>
+			<td>$${itemObj.total.toLocaleString('es-CL')}</td>
+			`;
+			quoteTableBody.appendChild(row);
+
+			sumNeto += itemObj.neto;
+			sumIva += itemObj.iva;
+			sumTotal += itemObj.total;
+		});
+
+		totalNeto.textContent = `$${sumNeto.toLocaleString('es-CL')}`;
+		totalIva.textContent = `$${sumIva.toLocaleString('es-CL')}`;
+		totalTotal.textContent = `$${sumTotal.toLocaleString('es-CL')}`;
+		}
+
+
+    quoteTableBody.addEventListener('click', (e) => {
+      if (e.target.classList.contains('remove-item')) {
+        const index = e.target.getAttribute('data-index');
+        items.splice(index, 1);
+        localStorage.setItem('items', JSON.stringify(items));
+        updateTable();
+      }
+    });
+
+    clearDataButton.addEventListener('click', () => {
+      if (confirm('¿Estás seguro de que deseas limpiar todos los datos?')) {
+        items = [];
+        localStorage.removeItem('items');
+        localStorage.removeItem('companyInfo');
+        localStorage.removeItem('greeting');
+        localStorage.removeItem('closingMessage');
+        localStorage.removeItem('documentTitle');
+        updateTable();
+        updateCompanyInfoDisplay();
+        updateGreetingDisplay();
+        updateClosingMessageDisplay();
+        updateDocumentTitleDisplay();
+      }
+    });
+
+    printButton.addEventListener('click', () => {
+      window.print();
+    });
+
+    updateCompanyInfoDisplay();
+    updateGreetingDisplay();
+    updateClosingMessageDisplay();
+    updateDocumentTitleDisplay();
+  });
+</script>
+
 <style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	.astro-a {
-		position: absolute;
-		top: -32px;
-		left: 50%;
-		transform: translatex(-50%);
-		width: 220px;
-		height: auto;
-		z-index: -1;
-	}
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	.instructions code {
-		font-size: 0.8em;
-		font-weight: bold;
-		background: rgba(var(--accent-light), 12%);
-		color: rgb(var(--accent-light));
-		border-radius: 4px;
-		padding: 0.3em 0.4em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent-light));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .header img {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+  }
+
+  .header-text {
+    flex-grow: 1;
+  }
+
+  .header-text h1 {
+    margin: 0;
+    font-size: 1.8em;
+  }
+
+  .header-text input {
+    font-size: 1.5em;
+    margin-top: 5px;
+    border: none;
+    border-bottom: 1px solid #000;
+    width: 100%;
+  }
+
+  .company-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .company-form .form-group {
+    flex: 1 1 48%;
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
+  #custom-greeting .form-group,
+  #closing-message .form-group {
+    margin-bottom: 20px;
+  }
+
+  #preset-message {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #555555;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+  }
+
+  #preset-message:hover {
+    background-color: #333333;
+  }
+
+  #printable-area {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border: 1px solid #dddddd;
+    margin-top: 40px;
+  }
+
+  #printable-area .header {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #printable-area .header img {
+    width: 80px;
+    height: 80px;
+  }
+
+  #printable-area .header-text {
+    margin-left: 20px;
+  }
+
+  #printable-area .header-text h1 {
+    margin: 0;
+    font-size: 1.8em;
+  }
+
+  #printable-area .header-text h2 {
+    margin: 5px 0 0 0;
+    font-size: 1.5em;
+  }
+
+  #display-company-info,
+  #display-greeting,
+  #display-closing-message {
+    margin-bottom: 20px;
+  }
+
+  #quote-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  #quote-table th,
+  #quote-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  #quote-table th {
+    background-color: #555555;
+    color: white;
+  }
+
+  #quote-table th:first-child {
+    width: 30px;
+  }
+
+  #quote-table tfoot td.total-iva {
+    font-weight: bold; /* Mantén la negrita solo en la celda del total final con IVA */
+}
+
+#quote-table tfoot tr td:nth-child(5),
+#quote-table tfoot tr td:nth-child(6),
+#quote-table tfoot tr td:nth-child(7),
+#quote-table tfoot tr td:nth-child(8) {
+    text-align: right;
+}
+
+#quote-table tfoot tr td:nth-child(5)::before,
+#quote-table tfoot tr td:nth-child(6)::before,
+#quote-table tfoot tr td:nth-child(7)::before,
+/* #quote-table tfoot tr td:nth-child(8)::before {
+    content: "$";
+} */
+
+  #item-form button,
+  #print-button,
+  #clear-data {
+    background-color: #555555;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  #item-form button:hover,
+  #print-button:hover,
+  #clear-data:hover {
+    background-color: #333333;
+  }
+
+  .remove-item {
+    background-color: transparent;
+    color: #e74c3c;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+
+  .remove-item:hover {
+    color: #c0392b;
+  }
+
+  #contact-info {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+  }
+
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #printable-area,
+    #printable-area * {
+      visibility: visible;
+    }
+    #printable-area {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+    #print-button,
+    #clear-data,
+    .remove-item {
+      display: none;
+    }
+  }
 </style>
