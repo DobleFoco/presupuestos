@@ -496,20 +496,40 @@ import Layout from '../layouts/Layout.astro';
     body * {
       visibility: hidden;
     }
+
     #printable-area,
     #printable-area * {
       visibility: visible;
     }
+
     #printable-area {
       position: absolute;
       left: 0;
       top: 0;
-      width: 100%;
+      width: auto; /* Ajusta el ancho automáticamente */
+      padding: 10px 20px; /* Agrega padding para evitar corte en los bordes */
+      box-sizing: border-box; /* Asegura que el padding se incluya en el tamaño total */
     }
+
     #print-button,
     #clear-data,
     .remove-item {
       display: none;
     }
-  }
+
+    table {
+      width: 100%; /* Asegura que la tabla ocupe el 100% del ancho disponible */
+      border-collapse: collapse; /* Evita espacios extra entre bordes */
+    }
+
+    table th, table td {
+      word-wrap: break-word; /* Evita que el contenido de las celdas se desborde */
+    }
+
+    @page {
+      size: A4; /* Ajusta la impresión para tamaño de página A4 */
+      margin: 15mm; /* Agrega márgenes para evitar cortes en los bordes */
+    }
+}
+
 </style>
